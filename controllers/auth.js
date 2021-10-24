@@ -1,38 +1,52 @@
-const {response}=require('express');
-const { validationResult } = require('express-validator');
+const { response } = require('express');
+const Usuario = require('../models/Usuario');
 
-const crearUsuario = (req, res = response) => {
-    const errors=validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            ok:false,
-            errors:errors.mapped()
+const crearUsuario = async (req, res = response) => {
+
+    const { cedula, edad, nombre } = req.body;
+    console.log(cedula, edad, nombre);
+
+    try {
+        //Verificar la cedula o Pin que no exista
+        const usuario = await Usuario.findOne({ cedula });
+        if (usuario) {
+            return res.status(400).json({
+                ok: true,
+                msg: 'El usuario ya existe'
+            })
+        }
+
+        //Crear usuario con el modelo
+        const dbUsuario = new Usuario(req.body);
+
+        //Genera el Jwt
+
+        //Crear el Usaurio de BD
+        await dbUsuario.save();
+
+        //Generar respuesta exitosa
+        return res.status(201).json({
+            ok: true,
+            uid:dbUsuario.id,
+            nombre
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.json({
+            ok: false,
+            msg: 'Hablar con el Administrador'
         });
     }
 
-    
-    const{cedula, edad, nombre}=req.body;
-    console.log(cedula,edad,nombre);
 
-    return res.json({
-        ok: true,
-        msg: 'Register Complete'
-    });
 }
 
 const loginUsuario = (req, res = response) => {
-    const errors=validationResult(req);
-    if(!errors.isEmpty()){
-        return res.status(400).json({
-            ok:false,
-            errors:errors.mapped()
-        });
-    }
 
-
-    const{cedula}=req.body;
+    const { cedula } = req.body;
     console.log(cedula);
-    
+
     return res.json({
         ok: true,
         msg: 'Login ok2'
@@ -47,7 +61,7 @@ const revalidarToken = (req, res = response) => {
 }
 
 
-module.exports={
+module.exports = {
     crearUsuario,
     loginUsuario,
     revalidarToken
