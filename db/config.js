@@ -1,5 +1,7 @@
 const mongoose  = require("mongoose");
 
+/*Para la conexión a la BD usamos MongoDB */
+
 const dbConnection = async () => {
     try {
         await mongoose.connect(process.env.BD_CNN, {
