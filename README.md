@@ -1,4 +1,7 @@
 # Backend-Cafetal
+## Ejecución en localhost:
+                           ` npm run dev `
+
 
 {
     "cedula":"",
