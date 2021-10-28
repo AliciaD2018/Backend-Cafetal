@@ -1,6 +1,5 @@
 # Backend-Cafetal
-## Ejecución en localhost:
-npm run dev
+## Ejecución en localhost: `npm run dev`
 
 
 `
