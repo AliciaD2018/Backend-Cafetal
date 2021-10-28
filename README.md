@@ -1,8 +1,9 @@
 # Backend-Cafetal
 ## Ejecución en localhost:
-                           `npm run dev`
+                           npm run dev
 
 
+`
 {
     "cedula":"",
     "edad":55,
@@ -12,3 +13,4 @@
     "fechaIngreso":"26/10/2021",
     "genero":"F"
 }
+`
